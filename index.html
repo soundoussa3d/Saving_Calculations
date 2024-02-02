@@ -96,30 +96,6 @@
       </div>
   </div>
    <script>
-    //Good Living
-    let calculateGoodLiving = document.getElementById("calculateGoodLiving");
-    calculateGoodLiving.addEventListener("click", () => {
-
-      let salary= parseInt(document.getElementById("salary").value);
-      let age= parseInt(document.getElementById("age").value);
-      let ps= parseFloat(document.getElementById("ps").value);
-      let pr= parseFloat(document.getElementById("pr").value);
-      let good= parseInt(document.getElementById("good").value);
-      let dd= document.getElementById("dd").value;
-      //make sure everything is filled 
-      if (salary==NaN || age==NaN || ps==NaN || pr==NaN || good==NaN|| dd=="") {
-        alert("Please fill all the data needed (the salary/the age/the percentage of savings/the percentage of raise /the date/the amount of money needed monthly )."); 
-      }
-      else{
-      var year= good*12;
-      var saving= calculate(); 
-      var m=parseInt(saving/year);
-      let resultat=document.getElementById("resultat");
-      resultat.innerHTML="Amount saved is: <strong>"+saving+"</strong> MAD <br>"+"the number of years that can assure a good living from the saved amount is:<strong> "+m+" </strong>years";  
-      }
-      
-    })
-
 
     //calculate
     let calculated = document.getElementById("calculate");
@@ -207,13 +183,12 @@
       var amount1=((salary*12)*ps)/100;
       var i=0;
       var salaries=[salary];
-
       while (amount1<amount) {
         var salary1= salaries[i]+(salaries[i]*pr)/100;
         salaries.push(salary1);
         amount1= amount1 + (salary1*ps)/100;
         i++;
-      }
+       }
       if(salaries.length<60-age ){
           resultat.innerHTML="Amount wanted:<strong> "+amount+ "</strong> MAD <br>"+"Amount accumulated :<strong> "+amount1.toFixed(2)+"</strong> MAD <br>"+"Number of years needed is: <strong>"+salaries.length +" </strong> year <br>";  
         }
@@ -223,9 +198,35 @@
     }
     })
 
+
+    //Good Living
+    let calculateGoodLiving = document.getElementById("calculateGoodLiving");
+    calculateGoodLiving.addEventListener("click", () => {
+
+      let salary= parseInt(document.getElementById("salary").value);
+      let age= parseInt(document.getElementById("age").value);
+      let ps= parseFloat(document.getElementById("ps").value);
+      let pr= parseFloat(document.getElementById("pr").value);
+      let good= parseInt(document.getElementById("good").value);
+      let dd= document.getElementById("dd").value;
+      //make sure everything is filled 
+      if (salary==NaN || age==NaN || ps==NaN || pr==NaN || good==NaN|| dd=="") {
+        alert("Please fill all the data needed (the salary/the age/the percentage of savings/the percentage of raise /the date/the amount of money needed monthly )."); 
+      }
+      else{
+      var year= good*12;
+      var saving= calculate(); 
+      var m=parseInt(saving/year);
+      let resultat=document.getElementById("resultat");
+      resultat.innerHTML="Amount saved is: <strong>"+saving+"</strong> MAD <br>"+"the number of years that can assure a good living from the saved amount is:<strong> "+m+" </strong>years";  
+      }
+      
+    })
+
     //reset function
     let reset = document.getElementById("reset"); 
-      reset.addEventListener("click", () => {document.getElementById("salary").value="";
+      reset.addEventListener("click", () => {
+        document.getElementById("salary").value="";
         document.getElementById("age").value="";
         document.getElementById("ps").value="";
         document.getElementById("pr").value="";
