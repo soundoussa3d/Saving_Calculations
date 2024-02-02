@@ -1,0 +1,241 @@
+<html>
+  <head>
+    <title>Calculated</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container-fluid px-1 py-5 mx-auto">
+      <div class="row d-flex justify-content-center">
+          <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+              <div class="card">
+                  <h2 class="text-center mb-4">
+                    Saving calculation
+                  </h2>
+                  <form class="form-card" onsubmit="event.preventDefault()">
+                      <div class="row justify-content-between text-left">
+                          <div class="form-group col-sm-6 flex-column d-flex">   
+                            <label class="form-control-label px-3">
+                              Salary Principal<span class="text-danger"> *</span>
+                            </label> 
+                            <input type="number" id="salary" name="salary" placeholder="Enter your  first salary"> 
+                          </div>
+                          <div class="form-group col-sm-6 flex-column d-flex">    
+                            <label class="form-control-label px-3">
+                              Age<span class="text-danger"> *</span>
+                            </label> 
+                            <input type="number" id="age" name="age" placeholder="Enter your age"> 
+                          </div>
+                      </div>
+                      <div class="row justify-content-between text-left">
+                          <div class="form-group col-sm-6 flex-column d-flex"> 
+                            <label class="form-control-label px-3">
+                              Percentage of savings from salary<span class="text-danger"> *</span>
+                            </label> 
+                            <input type="number" id="ps" name="ps" placeholder="Enter your percentage of saving"> 
+                          </div>
+                          <div class="form-group col-sm-6 flex-column d-flex"> 
+                            <label class="form-control-label px-3">
+                              Percentage of raise of salary<span class="text-danger"> *</span>
+                            </label> 
+                            <input type="number" id="pr" name="pr" placeholder="Enter your percentage of raise"> 
+                          </div>
+                      </div>
+                      <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                          <label class="form-control-label px-3">
+                            Start Date<span class="text-danger"> *</span>
+                          </label> 
+                          <input type="date" id="dd" name="dd" placeholder="Enter your start date"> 
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                          <label class="form-control-label px-3">
+                            Amount Wanted to save<span class="text-danger"> *</span>
+                          </label> 
+                          <input type="number" id="amountw" name="amountw" placeholder="Enter the amount of money wanted to save"> 
+                        </div>
+                    </div>
+                      <div class="row justify-content-between text-left">
+                          <div class="form-group col-12 flex-column d-flex"> 
+                            <label class="form-control-label px-3">
+                              Amount needed to assure a good living in a month<span class="text-danger"> *</span>
+                            </label> 
+                            <input type="number" id="good" name="good" placeholder="Enter the amount needed to assure a good living in your perspective" > 
+                          </div>
+                      </div>
+                      <div class="row  justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                          <button id="calculate"  class="btn-block btn-primary">
+                            Calculate the amount from saving
+                          </button>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                          <button id="calculateYears" class="btn-block btn-primary" >Calculate number of years needed</button>
+                        </div>
+                      </div>
+                      <div class="row  justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                          <button class="btn-block btn-primary" id="calculateGoodLiving">Calculate number of years that assure a good living</button>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                          <button class="btn-block btn-primary" id="reset" >reset</button>
+                        </div>
+                      </div>
+                      <div class="row justify-content-between text-left">
+                        <div class="form-group col-12 flex-column d-flex"> 
+                          <p id="resultat" class="text-center mb-4">
+                            
+                          </p>
+                        </div>
+                    </div>  
+                  </form>
+              </div> 
+          </div>
+      </div>
+  </div>
+   <script>
+    //Good Living
+    let calculateGoodLiving = document.getElementById("calculateGoodLiving");
+    calculateGoodLiving.addEventListener("click", () => {
+
+      let salary= parseInt(document.getElementById("salary").value);
+      let age= parseInt(document.getElementById("age").value);
+      let ps= parseFloat(document.getElementById("ps").value);
+      let pr= parseFloat(document.getElementById("pr").value);
+      let good= parseInt(document.getElementById("good").value);
+      let dd= document.getElementById("dd").value;
+      //make sure everything is filled 
+      if (salary==NaN || age==NaN || ps==NaN || pr==NaN || good==NaN|| dd=="") {
+        alert("Please fill all the data needed (the salary/the age/the percentage of savings/the percentage of raise /the date/the amount of money needed monthly )."); 
+      }
+      else{
+      var year= good*12;
+      var saving= calculate(); 
+      var m=parseInt(saving/year);
+      let resultat=document.getElementById("resultat");
+      resultat.innerHTML="Amount saved is: <strong>"+saving+"</strong> MAD <br>"+"the number of years that can assure a good living from the saved amount is:<strong> "+m+" </strong>years";  
+      }
+      
+    })
+
+
+    //calculate
+    let calculated = document.getElementById("calculate");
+    calculated.addEventListener("click", (e) => {
+     
+      let salary= parseInt(document.getElementById("salary").value);
+      let age= parseInt(document.getElementById("age").value);
+      let ps= parseFloat(document.getElementById("ps").value);
+      let pr= parseFloat(document.getElementById("pr").value);
+      let resultat=document.getElementById("resultat");
+      let dd= document.getElementById("dd");
+      let date1= new Date() ;
+      let date2= new Date(dd.value) ;
+      const date=getYearDiff(date1,date2);
+      saving=calculate();
+      e.preventDefault();
+      if (!(salary==NaN || age==NaN || ps==NaN || pr==NaN || dd.value=="") ){
+      resultat.innerHTML="Amount saved in <strong>"+date +"</strong> years is:<strong> "+saving+"</strong> MAD ";  
+     }
+    })
+
+      //years between two dates
+      function getYearDiff(date1, date2) {
+        return Math.abs(date1.getFullYear() - date2.getFullYear());
+      }
+
+//calculate function
+    function calculate(){
+      let salary= parseInt(document.getElementById("salary").value);
+      let age= parseInt(document.getElementById("age").value);
+      let ps= parseFloat(document.getElementById("ps").value);
+      let pr= parseFloat(document.getElementById("pr").value);
+      let dd= document.getElementById("dd");
+      let date1= new Date() ;
+      let date2= new Date(dd.value) ;
+      var saving= 0 ;
+      //make sure everything is filled  
+      if (salary==NaN || age==NaN || ps==NaN || pr==NaN || dd.value=="") {
+        alert("Please fill all the data needed (the salary/the age/the percentage of savings/the percentage of raise /the date)."); 
+      }
+      else {
+      //number of years from his start year to today
+      const date=getYearDiff(date1,date2);
+      //initial the list of salaries 
+      var salaries=[];
+      //initial the list of savings 
+      var savings= [];
+      //first salary
+      var salary1=salary*12;
+      salaries.push(salary1);
+      //first saving
+      var save=(salary1*ps)/100;
+      savings.push(save);
+       //if pr is fix
+      for (let i = 1; i < date; i++) {
+        var salary1 = salaries[i-1] + (salaries[i-1] * pr)/100;
+        salaries.push(salary1);
+        var save= (salary1*ps)/100;
+        savings.push(save);
+      }
+      for (let i = 0; i < savings.length; i++) {
+        saving = saving +savings[i]
+      }
+
+      return saving.toFixed(2);
+    }
+    }
+
+    //calculate number of years needed
+   
+    let calculateYear = document.getElementById("calculateYears"); 
+    calculateYear.addEventListener("click", (e) => {
+      let resultat=document.getElementById("resultat");
+      let salary= parseInt(document.getElementById("salary").value);
+      let age= parseInt(document.getElementById("age").value);
+      let ps= parseFloat(document.getElementById("ps").value);
+      let pr= parseFloat(document.getElementById("pr").value);
+      let amount= parseInt(document.getElementById("amountw").value);
+      e.preventDefault();
+       //make sure everything is filled  
+      if (salary==NaN || age==NaN || ps==NaN || pr==NaN || isNaN(amount)) {
+        alert("Please fill all the data needed (the salary/the age/the percentage of savings/the percentage of raise /the amount of money wanted)."); 
+      }
+      else{
+      var amount1=((salary*12)*ps)/100;
+      var i=0;
+      var salaries=[salary];
+
+      while (amount1<amount) {
+        var salary1= salaries[i]+(salaries[i]*pr)/100;
+        salaries.push(salary1);
+        amount1= amount1 + (salary1*ps)/100;
+        i++;
+      }
+      if(salaries.length<60-age ){
+          resultat.innerHTML="Amount wanted:<strong> "+amount+ "</strong> MAD <br>"+"Amount accumulated :<strong> "+amount1.toFixed(2)+"</strong> MAD <br>"+"Number of years needed is: <strong>"+salaries.length +" </strong> year <br>";  
+        }
+      else {
+        alert("amount can't be accumulated you need way more extra years " );
+      }
+    }
+    })
+
+    //reset function
+    let reset = document.getElementById("reset"); 
+      reset.addEventListener("click", () => {document.getElementById("salary").value="";
+        document.getElementById("age").value="";
+        document.getElementById("ps").value="";
+        document.getElementById("pr").value="";
+        document.getElementById("good").value="";
+        document.getElementById("amountw").value="";
+        document.getElementById("dd").value="";
+        document.getElementById("resultat").innerHTML="";
+      })
+    
+    
+   </script>
+  </body>
+</html>
